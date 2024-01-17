@@ -1,4 +1,5 @@
 # Places Project with MERN Stack
+**_NOTE:_**  INCOMPLETE
 
 This full-stack web application was made following a Udemy course. This application uses MongoDB, Express.js, React.js and Node.js.
 
