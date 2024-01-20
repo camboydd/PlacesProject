@@ -5,6 +5,7 @@ import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -60,7 +61,7 @@ const Auth = () => {
 
   const authSubmitHandler = async event => {
     event.preventDefault();
-
+    
     if (isLoginMode) {
     } else {
       try {
@@ -87,8 +88,10 @@ const Auth = () => {
       } catch (err) {
         setIsLoading(false);
         setError(err.message || 'Something went wrong, please try again.');
-      }
+      } 
     }
+
+    auth.login();
   };
 
   const errorHandler = () => {
@@ -99,7 +102,7 @@ const Auth = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={errorHandler} />
       <Card className="authentication">
-        {isLoading && <LoadingSpinner asOverlay />}
+      {isLoading && <LoadingSpinner asOverlay />}
         <h2>Login Required</h2>
         <hr />
         <form onSubmit={authSubmitHandler}>

@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Routes
+  Redirect,
+  Switch
 } from 'react-router-dom';
 
 import Users from './user/pages/Users';
@@ -28,20 +29,36 @@ const App = () => {
 
   if (isLoggedIn) {
     routes = (
-      <Routes>
-        <Route exact path="/" element={<Users />}/>
-        <Route exact path="/:userId/places" element={<UserPlaces/>}/>
-        <Route exat path="/places/new" element={<NewPlace />}/>
-        <Route path="/places/:placeId" element={<UpdatePlace />}/>
-      </Routes>
+      <Switch>
+        <Route path="/" exact>
+          <Users />
+        </Route>
+        <Route path="/:userId/places" exact>
+          <UserPlaces />
+        </Route>
+        <Route path="/places/new" exact>
+          <NewPlace />
+        </Route>
+        <Route path="/places/:placeId">
+          <UpdatePlace />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
     );
   } else {
     routes = (
-      <Routes>
-        <Route exact path="/" element={<Users />}/>
-        <Route exact path="/:userId/places" element={<UserPlaces/>}/>
-        <Route path="/auth" element={<Auth />}/>
-      </Routes>
+      <Switch>
+        <Route path="/" exact>
+          <Users />
+        </Route>
+        <Route path="/:userId/places" exact>
+          <UserPlaces />
+        </Route>
+        <Route path="/auth">
+          <Auth />
+        </Route>
+        <Redirect to="/auth" />
+      </Switch>
     );
   }
 
