@@ -1,19 +1,41 @@
 const express = require('express');
 const { check } = require('express-validator');
 
-const placesControllers = require('../controllers/places-controller');
+const placesController = require('../controllers/places-controller');
+const fileUpload = require('../middleware/file-upload');
 
 const router = express.Router();
 
-// listening for requests to a path, then executing a middleware function
-router.get('/:pid', placesControllers.getPlaceById);
+router.get('/:pid', placesController.getPlaceById);
 
-router.get('/user/:uid', placesControllers.getPlacesByUserId);
+router.get('/user/:uid', placesController.getPlacesByUserId);
 
-router.post('/', [check('title').not().isEmpty(), check('description').isLength({min: 5}), check('address').not().isEmpty()], placesControllers.createPlace);
+router.post(
+  '/',
+  fileUpload.single('image'),
+  [
+    check('title')
+      .not()
+      .isEmpty(),
+    check('description').isLength({ min: 5 }),
+    check('address')
+      .not()
+      .isEmpty()
+  ],
+  placesController.createPlace
+);
 
-router.patch('/:pid', [check('title').not().isEmpty(), check('description').isLength({min: 5})], placesControllers.updatePlace);
+router.patch(
+  '/:pid',
+  [
+    check('title')
+      .not()
+      .isEmpty(),
+    check('description').isLength({ min: 5 })
+  ],
+  placesController.updatePlace
+);
 
-router.delete('/:pid', placesControllers.deletePlace);
+router.delete('/:pid', placesController.deletePlace);
 
 module.exports = router;
