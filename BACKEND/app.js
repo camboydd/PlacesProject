@@ -9,7 +9,11 @@ const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 
+let cors = require("cors");
+
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 
@@ -55,4 +59,3 @@ mongoose
     .catch(err => {
         console.log(err);
     });
-
